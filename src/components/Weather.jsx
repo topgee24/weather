@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Weather.css'
-import search_icon from '../assets/search.png'
+import search_icon from '../assets/searches.png'
 import clear_icon from '../assets/sunny.png'
 import cloud_icon from '../assets/clouds.png'
 import humidity_icon from '../assets/humiditys.png'
@@ -11,6 +11,8 @@ import wind_icon from '../assets/winds.png'
 
 
 const Weather = () => {
+
+  const inputRef = useRef()
 const [weatherData, setWeatherData] = useState(false);
 const allIcons = {
   "01d": clear_icon,
@@ -41,7 +43,7 @@ const allIcons = {
       const data = await response.json();
       console.log(data)
       const icon = allIcons[data.weather[0].icon] || clear_icon; 
-      
+
       setWeatherData({
         humidity: data.main.humidity,
         windSpeed: data.wind.speed,
@@ -55,19 +57,19 @@ const allIcons = {
   }
 
   useEffect(() => {
-    search("London")
+    search("Accra")
   },[])
   return (
     <div className='weather'>
         <div className='search-container'>
     <div className='search-bar'>
-            <input type="text" placeholder='Search...' />
-            <img className='search_icon' src={search_icon} alt="search icon" />
+            <input ref={inputRef} type="text" placeholder='Search...' />
+            <img className='search_icon' src={search_icon} alt="search icon" onClick={() => search(inputRef.current.value)}/>
             
         </div>
         </div>
 
-        <img src={clear_icon} alt="clear icon" className='' />
+        <img src={weatherData.icon} alt="" className='' />
         <p className='temperature'>{weatherData.temperature}°C </p>
         <p className='location'>{weatherData.location}</p>
         <div className="weather-data">
