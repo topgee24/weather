@@ -8,6 +8,7 @@ import snow_icon from '../assets/snowy.png'
 import rain_icon from '../assets/rains.png'
 import drizzle_icon from '../assets/drizzles.png'
 import wind_icon from '../assets/winds.png'
+import { toast } from 'react-toastify'
 
 
 const Weather = () => {
@@ -53,6 +54,7 @@ const allIcons = {
       })
     } catch (error) {
       console.error("An error occurred: ", error)
+      toast.error("City not found, check and try again");
     }
   }
 
